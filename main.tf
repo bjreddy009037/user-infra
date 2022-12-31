@@ -1,27 +1,25 @@
 module "vpc" {
-  source = "github.com/bjreddy009037/tf-module-vpc"
+  source         = "github.com/bjreddy009037/tf-module-vpc"
   VPC_CIDR_BLOCK = var.VPC_CIDR_BLOCK
-  COMPONENT = var.COMPONENT
-  ENV = var.ENV
-  AZ = var.AZ
-  SUBNET_CIDR = var.SUBNET_CIDR
+  COMPONENT      = var.COMPONENT
+  ENV            = var.ENV
+  AZ             = var.AZ
+  SUBNET_CIDR    = var.SUBNET_CIDR
 }
 
 module "elasticache" {
-  depends_on = [module.vpc]
-  source = "github.com/bjreddy009037/tf-module-elasticache-redis"
-  ENGINE = var.EC_ENGINE
+  depends_on     = [module.vpc]
+  source         = "github.com/bjreddy009037/tf-module-elasticache-redis"
+  ENGINE         = var.EC_ENGINE
   ENGINE_VERSION = var.EC_ENGINE_VERSION
-  NODE_TYPE = var.EC_NODE_TYPE
-  ENV = var.ENV
-  COMPONENT = var.COMPONENT
-  NODE_COUNT = var.EC_NODE_COUNT
-  FAMILY = var.EC_FAMILY
-  VPC_ID = module.vpc.VPC_ID
-  VPC_CIDR = module.vpc.VPC_CIDR
-  SUBNET_IDS = module.vpc.SUBNET_IDS
-
-
+  NODE_TYPE      = var.EC_NODE_TYPE
+  ENV            = var.ENV
+  COMPONENT      = var.COMPONENT
+  NODE_COUNT     = var.EC_NODE_COUNT
+  FAMILY         = var.EC_FAMILY
+  VPC_ID         = module.vpc.VPC_ID
+  VPC_CIDR       = module.vpc.VPC_CIDR
+  SUBNET_IDS     = module.vpc.SUBNET_IDS
 }
 
 module "documentdb" {
@@ -35,7 +33,7 @@ module "documentdb" {
   NODE_COUNT          = var.DOCDB_NODE_COUNT
   FAMILY              = var.DOCDB_FAMILY
   SKIP_FINAL_SNAPSHOT = var.DOCDB_SKIP_FINAL_SNAPSHOT
-  VPC_ID = module.vpc.VPC_ID
-  VPC_CIDR = module.vpc.VPC_CIDR
-  SUBNET_IDS = module.vpc.SUBNET_IDS
+  VPC_ID              = module.vpc.VPC_ID
+  VPC_CIDR            = module.vpc.VPC_CIDR
+  SUBNET_IDS          = module.vpc.SUBNET_IDS
 }
